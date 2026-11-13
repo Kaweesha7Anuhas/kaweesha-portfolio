@@ -22,6 +22,8 @@ export function GitHubSection() {
         </Reveal>
 
         <div className="max-w-5xl mx-auto glass rounded-2xl border border-white/10 p-8 flex flex-col md:flex-row items-center gap-12">
+          
+          {/* Profile Info */}
           <div className="flex-1 text-center md:text-left">
             <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6">
               <FaGithub className="h-10 w-10 text-foreground" />
@@ -36,16 +38,22 @@ export function GitHubSection() {
             </a>
           </div>
 
+          {/* GitHub Streak Card */}
           <div className="flex-1 w-full flex justify-center">
-            <div className="relative w-full max-w-md aspect-video bg-secondary/30 rounded-xl overflow-hidden border border-white/5 flex items-center justify-center">
+            <div className="relative w-full max-w-md aspect-video bg-secondary/30 rounded-xl overflow-hidden border border-white/5 flex items-center justify-center p-4">
+                {/* 
+                  We use the streak-stats API here because it often loads faster 
+                  and looks better for new profiles than the standard stats card.
+                */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="https://github-readme-stats.vercel.app/api?username=Kaweesha7Anuhas&show_icons=true&theme=transparent&text_color=94a3b8&icon_color=8b5cf6&title_color=8b5cf6&hide_border=true" 
-                  alt="Kaweesha's GitHub Stats"
-                  className="w-full h-auto object-contain p-4"
+                  src="https://github-readme-streak-stats.herokuapp.com/?user=Kaweesha7Anuhas&theme=transparent&hide_border=true&stroke=8b5cf6&ring=8b5cf6&fire=8b5cf6&currStreakNum=ffffff&currStreakLabel=94a3b8&sideNums=ffffff&sideLabels=94a3b8&dates=94a3b8" 
+                  alt="Kaweesha's GitHub Streak"
+                  className="w-full h-auto object-contain"
                 />
             </div>
           </div>
+
         </div>
       </div>
     </section>
