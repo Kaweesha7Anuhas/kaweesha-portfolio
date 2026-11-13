@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, ArrowRight } from "lucide-react";
-import { FaGithub } from "react-icons/fa6"; // Swapped Github import here!
+import { FaGithub } from "react-icons/fa6";
 import { Reveal } from "@/components/shared/reveal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +18,6 @@ const categories: ("All" | ProjectCategory)[] = ["All", "Backend", "Full-Stack",
 export function Projects() {
   const [activeFilter, setActiveFilter] = useState<"All" | ProjectCategory>("All");
 
-  // Separate featured and regular projects, then apply the filter
   const filteredProjects = projects.filter(
     (project) => activeFilter === "All" || project.category === activeFilter
   );
@@ -36,7 +36,6 @@ export function Projects() {
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-brand-indigo to-brand-cyan rounded-full mb-8" />
             
-            {/* Filter Tabs */}
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map((category) => (
                 <Button
@@ -55,7 +54,6 @@ export function Projects() {
           </div>
         </Reveal>
 
-        {/* Featured Projects (Larger Cards) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <AnimatePresence mode="popLayout">
             {featuredProjects.map((project, index) => (
@@ -64,7 +62,6 @@ export function Projects() {
           </AnimatePresence>
         </div>
 
-        {/* Regular Projects (Smaller Grid) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
             {regularProjects.map((project, index) => (
@@ -84,8 +81,10 @@ export function Projects() {
   );
 }
 
-// Reusable Project Card Component with built-in Modal
 function ProjectCard({ project, index, featured = false }: { project: Project; index: number; featured?: boolean }) {
+  // Use the first image as the cover, with a fallback if the array is empty
+  const coverImage = project.images?.[0] || "placeholder.png";
+
   return (
     <motion.div
       layout
@@ -96,12 +95,16 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
     >
       <Card className="glass h-full flex flex-col group overflow-hidden border-white/10 hover:border-brand-violet/50 transition-all duration-300">
         
-        {/* Image Placeholder */}
-        <div className={cn("w-full bg-secondary/30 relative overflow-hidden flex items-center justify-center border-b border-white/5", featured ? "h-64 md:h-80" : "h-48")}>
-          <div className="absolute inset-0 bg-gradient-to-tr from-brand-indigo/20 to-brand-cyan/20 group-hover:scale-105 transition-transform duration-500" />
-          <span className="text-muted-foreground text-sm z-10 px-4 text-center">
-            Image Placeholder<br/>({project.imagePlaceholder})
-          </span>
+        {/* Cover Image */}
+        <div className={cn("w-full bg-secondary/30 relative overflow-hidden border-b border-white/5", featured ? "h-64 md:h-80" : "h-48")}>
+          <Image
+            src={`/projects/${coverImage}`}
+            alt={project.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          {/* Optional gradient overlay so text is readable if you overlay anything */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
 
         <CardHeader>
@@ -144,7 +147,9 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
                 Details <ArrowRight className="h-4 w-4" />
               </Button>
             </DialogTrigger>
-            <DialogContent className="glass border-white/10 sm:max-w-[600px]">
+            
+            {/* Added max-h and overflow to make the modal scrollable for multiple images */}
+            <DialogContent className="glass border-white/10 sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="font-heading text-2xl">{project.title}</DialogTitle>
                 <DialogDescription className="text-muted-foreground pt-2">
@@ -153,7 +158,7 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
               </DialogHeader>
               
               <div className="py-4">
-                <h4 className="font-semibold mb-2">Key Features</h4>
+                <h4 className="font-semibold mb-2 text-foreground">Key Features</h4>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
                   {project.features.map((feature, i) => (
                     <li key={i}>{feature}</li>
@@ -162,7 +167,7 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
               </div>
 
               <div>
-                <h4 className="font-semibold mb-2 text-sm">Tech Stack</h4>
+                <h4 className="font-semibold mb-2 text-sm text-foreground">Tech Stack</h4>
                 <div className="flex flex-wrap gap-2">
                   {project.techStack.map((tech) => (
                     <Badge key={tech} variant="secondary" className="bg-brand-violet/10 text-brand-violet">
@@ -172,7 +177,26 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
                 </div>
               </div>
 
-              <div className="flex gap-2 mt-6">
+              {/* NEW: Image Gallery inside Modal */}
+              {project.images && project.images.length > 0 && (
+                <div className="mt-6 border-t border-white/10 pt-6">
+                  <h4 className="font-semibold mb-4 text-sm text-foreground">Project Screenshots</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {project.images.map((img, i) => (
+                      <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-white/10 bg-secondary/30">
+                        <Image
+                          src={`/projects/${img}`}
+                          alt={`${project.title} screenshot ${i + 1}`}
+                          fill
+                          className="object-cover hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-2 mt-8">
                 {project.githubUrl && (
                   <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
                     <Button variant="outline" className="w-full gap-2">

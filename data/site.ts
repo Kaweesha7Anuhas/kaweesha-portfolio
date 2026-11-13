@@ -14,5 +14,5 @@ export const siteConfig = {
   ],
   url: "https://kaweesha-portfolio.vercel.app", // Placeholder, update in Phase 12
   ogImage: "/og-image.png", // Placeholder, update in Phase 9
-  cvPath: "/Kaweesha_Anuhas_CV.pdf", // Placeholder, update in Phase 13
+  cvPath: "/profile/Kaweesha_Anuhas_CV.pdf", , // Placeholder, update in Phase 13
 };

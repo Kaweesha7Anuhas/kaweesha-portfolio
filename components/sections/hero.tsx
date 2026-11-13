@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Download, Mail, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -85,10 +86,16 @@ export function Hero() {
           className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 flex-shrink-0"
         >
           <div className="absolute inset-0 bg-gradient-to-tr from-brand-indigo to-brand-cyan rounded-full blur-2xl opacity-40 animate-pulse" />
-          <div className="relative w-full h-full rounded-full border border-white/20 glass flex items-center justify-center overflow-hidden">
-             <span className="text-muted-foreground text-sm text-center px-4">
-               Profile Photo Placeholder<br/>(Add to /public/profile.jpg)
-             </span>
+          
+          {/* Updated Image Container */}
+          <div className="relative w-full h-full rounded-full border border-white/20 glass overflow-hidden">
+            <Image 
+               src="/profile/profile.jpg" 
+               alt="Kaweesha Anuhas" 
+               fill 
+               className="object-cover"
+               priority
+             />
           </div>
         </motion.div>
       </div>

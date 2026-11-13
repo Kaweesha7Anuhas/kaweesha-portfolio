@@ -9,7 +9,7 @@ export interface Project {
   featured: boolean;
   githubUrl?: string;
   liveUrl?: string;
-  imagePlaceholder: string;
+  images: string[]; 
   features: string[];
 }
 
@@ -21,8 +21,9 @@ export const projects: Project[] = [
     category: "Backend",
     techStack: ["Java", "Spring Boot", "MongoDB", "H2", "MySQL", "JWT", "Swagger"],
     featured: true,
-    githubUrl: "https://github.com/kaweesha-anuhas", // Placeholder
-    imagePlaceholder: "ridelink.png",
+    githubUrl: "https://github.com/kaweesha-anuhas", 
+    // Assuming you have ridelink/1.png, ridelink/2.png etc.
+    images: ["ridelink/1.png", "ridelink/2.png", "ridelink/3.png", "ridelink/4.png", "ridelink/5.png"],
     features: [
       "Microservices architecture",
       "Account and Driver management",
@@ -38,8 +39,9 @@ export const projects: Project[] = [
     category: "Full-Stack",
     techStack: ["Java", "Spring Boot", "MySQL", "React", "React Native"],
     featured: true,
-    githubUrl: "https://github.com/kaweesha-anuhas", // Placeholder
-    imagePlaceholder: "sadareka.png",
+    githubUrl: "https://github.com/kaweesha-anuhas", 
+    // Assuming you have sadareka/1.png, sadareka/2.png etc.
+    images: ["sadareka/1.png", "sadareka/2.png", "sadareka/3.png"],
     features: [
       "Product management",
       "Sales and payments tracking",
@@ -55,8 +57,9 @@ export const projects: Project[] = [
     category: "Full-Stack",
     techStack: ["Java", "Spring Boot", "Spring Security", "MySQL", "jQuery", "AJAX", "Bootstrap"],
     featured: false,
-    githubUrl: "https://github.com/kaweesha-anuhas", // Placeholder
-    imagePlaceholder: "loan.png",
+    githubUrl: "https://github.com/kaweesha-anuhas", 
+    // Pointing to the exact file names you showed in the screenshot
+    images: ["loan/lms1.png", "loan/lms2.png", "loan/lms3.png", "loan/lms4.png", "loan/lms5.png"],
     features: [
       "Role-based access control",
       "Approval workflows",
@@ -71,8 +74,9 @@ export const projects: Project[] = [
     category: "Full-Stack",
     techStack: ["Java", "Spring Boot", "Spring Security", "MySQL", "jQuery", "AJAX", "Bootstrap"],
     featured: false,
-    githubUrl: "https://github.com/kaweesha-anuhas", // Placeholder
-    imagePlaceholder: "finance.png",
+    githubUrl: "https://github.com/kaweesha-anuhas", 
+    // Pointing to the exact file names you showed in the screenshot
+    images: ["finance/ftm1.png", "finance/ftm2.png", "finance/ftm3.png", "finance/ftm4.png", "finance/ftm5.png"],
     features: [
       "Deposits and withdrawals",
       "Balance management",
@@ -87,8 +91,8 @@ export const projects: Project[] = [
     category: "Full-Stack",
     techStack: ["Java", "Spring Boot", "MySQL", "jQuery", "AJAX", "Bootstrap"],
     featured: false,
-    githubUrl: "https://github.com/kaweesha-anuhas", // Placeholder
-    imagePlaceholder: "employee.png",
+    githubUrl: "https://github.com/kaweesha-anuhas", 
+    images: ["employee/1.png"],
     features: [
       "Employee registration",
       "Profile management",
@@ -103,8 +107,8 @@ export const projects: Project[] = [
     category: "Full-Stack",
     techStack: ["Java", "Spring Boot", "MySQL", "jQuery", "AJAX", "Bootstrap"],
     featured: false,
-    githubUrl: "https://github.com/kaweesha-anuhas", // Placeholder
-    imagePlaceholder: "customer.png",
+    githubUrl: "https://github.com/kaweesha-anuhas", 
+    images: ["customer/1.png"],
     features: [
       "Customer profiles",
       "Contact management",
