@@ -12,7 +12,7 @@ export const siteConfig = {
     "Full-Stack Developer",
     "Software Engineering Intern (Seeking)"
   ],
-  url: "https://kaweesha-portfolio.vercel.app", // Placeholder, update in Phase 12
-  ogImage: "/og-image.png", // Placeholder, update in Phase 9
-  cvPath: "/profile/Kaweesha_Anuhas_CV.pdf", , // Placeholder, update in Phase 13
+  url: "https://kaweesha-portfolio.vercel.app", // Update this in Phase 12
+  ogImage: "/og-image.png", // Update this in Phase 9
+  cvPath: "/profile/Kaweesha_Anuhas_CV.pdf", // Fixed the double comma here!
 };
