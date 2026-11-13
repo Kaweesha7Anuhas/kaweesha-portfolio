@@ -27,9 +27,9 @@ export function GitHubSection() {
               <FaGithub className="h-10 w-10 text-foreground" />
             </div>
             <h3 className="font-heading font-bold text-2xl mb-2">Kaweesha Anuhas</h3>
-            <p className="text-muted-foreground mb-6">@kaweesha-anuhas</p>
+            <p className="text-muted-foreground mb-6">@Kaweesha7Anuhas</p>
             
-            <a href="https://github.com/kaweesha-anuhas" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/Kaweesha7Anuhas" target="_blank" rel="noopener noreferrer">
               <Button className="w-full md:w-auto gap-2 rounded-full">
                 <Star className="h-4 w-4" /> Follow on GitHub
               </Button>
@@ -40,7 +40,7 @@ export function GitHubSection() {
             <div className="relative w-full max-w-md aspect-video bg-secondary/30 rounded-xl overflow-hidden border border-white/5 flex items-center justify-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="https://github-readme-stats.vercel.app/api?username=kaweesha-anuhas&show_icons=true&theme=transparent&text_color=94a3b8&icon_color=8b5cf6&title_color=8b5cf6&hide_border=true" 
+                  src="https://github-readme-stats.vercel.app/api?username=Kaweesha7Anuhas&show_icons=true&theme=transparent&text_color=94a3b8&icon_color=8b5cf6&title_color=8b5cf6&hide_border=true" 
                   alt="Kaweesha's GitHub Stats"
                   className="w-full h-auto object-contain p-4"
                 />

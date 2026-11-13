@@ -4,7 +4,7 @@ import { siteConfig } from "./site";
 export const socials = [
   {
     name: "GitHub",
-    href: "https://github.com/kaweesha-anuhas",
+    href: "https://github.com/Kaweesha7Anuhas", // Updated URL
     icon: FaGithub,
     ariaLabel: "Visit my GitHub profile",
   },

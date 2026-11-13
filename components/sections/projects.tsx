@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { Reveal } from "@/components/shared/reveal";
 import { Button } from "@/components/ui/button";
@@ -82,8 +82,18 @@ export function Projects() {
 }
 
 function ProjectCard({ project, index, featured = false }: { project: Project; index: number; featured?: boolean }) {
-  // Use the first image as the cover, with a fallback if the array is empty
   const coverImage = project.images?.[0] || "placeholder.png";
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setCurrentImgIndex((prev) => (prev + 1) % project.images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setCurrentImgIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
+  };
 
   return (
     <motion.div
@@ -103,7 +113,6 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          {/* Optional gradient overlay so text is readable if you overlay anything */}
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
 
@@ -148,8 +157,7 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
               </Button>
             </DialogTrigger>
             
-            {/* Added max-h and overflow to make the modal scrollable for multiple images */}
-            <DialogContent className="glass border-white/10 sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+            <DialogContent className="glass border-white/10 sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="font-heading text-2xl">{project.title}</DialogTitle>
                 <DialogDescription className="text-muted-foreground pt-2">
@@ -157,49 +165,91 @@ function ProjectCard({ project, index, featured = false }: { project: Project; i
                 </DialogDescription>
               </DialogHeader>
               
-              <div className="py-4">
-                <h4 className="font-semibold mb-2 text-foreground">Key Features</h4>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                  {project.features.map((feature, i) => (
-                    <li key={i}>{feature}</li>
-                  ))}
-                </ul>
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                {/* Left Side: Images */}
+                <div className="space-y-4">
+                  <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 bg-black/50 group/carousel">
+                    <Image
+                      src={`/projects/${project.images[currentImgIndex]}`}
+                      alt={`${project.title} screenshot ${currentImgIndex + 1}`}
+                      fill
+                      className="object-contain"
+                    />
+                    
+                    {/* Navigation Buttons */}
+                    {project.images.length > 1 && (
+                      <>
+                        <button 
+                          onClick={prevImage}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-brand-violet text-white rounded-full opacity-0 group-hover/carousel:opacity-100 transition-all"
+                          aria-label="Previous image"
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </button>
+                        <button 
+                          onClick={nextImage}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-brand-violet text-white rounded-full opacity-0 group-hover/carousel:opacity-100 transition-all"
+                          aria-label="Next image"
+                        >
+                          <ChevronRight className="h-5 w-5" />
+                        </button>
+                      </>
+                    )}
+                  </div>
 
-              <div>
-                <h4 className="font-semibold mb-2 text-sm text-foreground">Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((tech) => (
-                    <Badge key={tech} variant="secondary" className="bg-brand-violet/10 text-brand-violet">
-                      {tech}
-                    </Badge>
-                  ))}
+                  {/* Thumbnails */}
+                  {project.images.length > 1 && (
+                    <div className="flex gap-2 overflow-x-auto pb-2">
+                      {project.images.map((img, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCurrentImgIndex(i)}
+                          className={cn(
+                            "relative w-20 h-14 rounded-md overflow-hidden border-2 transition-all shrink-0",
+                            currentImgIndex === i ? "border-brand-violet opacity-100" : "border-transparent opacity-50 hover:opacity-100"
+                          )}
+                        >
+                          <Image
+                            src={`/projects/${img}`}
+                            alt={`Thumbnail ${i + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              {/* NEW: Image Gallery inside Modal */}
-              {project.images && project.images.length > 0 && (
-                <div className="mt-6 border-t border-white/10 pt-6">
-                  <h4 className="font-semibold mb-4 text-sm text-foreground">Project Screenshots</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {project.images.map((img, i) => (
-                      <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-white/10 bg-secondary/30">
-                        <Image
-                          src={`/projects/${img}`}
-                          alt={`${project.title} screenshot ${i + 1}`}
-                          fill
-                          className="object-cover hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                    ))}
+                {/* Right Side: Details */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold mb-2 text-foreground">Key Features</h4>
+                    <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                      {project.features.map((feature, i) => (
+                        <li key={i}>{feature}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold mb-2 text-sm text-foreground">Tech Stack</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.techStack.map((tech) => (
+                        <Badge key={tech} variant="secondary" className="bg-brand-violet/10 text-brand-violet">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              )}
+              </div>
 
-              <div className="flex gap-2 mt-8">
+              {/* Bottom Actions */}
+              <div className="flex gap-2 mt-6 pt-4 border-t border-white/10">
                 {project.githubUrl && (
                   <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
-                    <Button variant="outline" className="w-full gap-2">
+                    <Button variant="outline" className="w-full gap-2 glass hover:text-brand-violet">
                       <FaGithub className="h-4 w-4" /> View Source
                     </Button>
                   </a>
