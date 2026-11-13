@@ -1,16 +1,14 @@
 "use client";
 
 import { Reveal } from "@/components/shared/reveal";
-import { FaGithub } from "react-icons/fa6"; // Avoid lucide brand icons!
+import { FaGithub } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { Star } from "lucide-react";
 
 export function GitHubSection() {
   return (
     <section id="github" className="py-24 relative">
       <div className="container mx-auto px-4 md:px-6">
-        
         <Reveal>
           <div className="flex flex-col items-center mb-12 text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
@@ -24,8 +22,6 @@ export function GitHubSection() {
         </Reveal>
 
         <div className="max-w-5xl mx-auto glass rounded-2xl border border-white/10 p-8 flex flex-col md:flex-row items-center gap-12">
-          
-          {/* GitHub Profile Info */}
           <div className="flex-1 text-center md:text-left">
             <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6">
               <FaGithub className="h-10 w-10 text-foreground" />
@@ -40,13 +36,9 @@ export function GitHubSection() {
             </a>
           </div>
 
-          {/* GitHub Stats Image */}
           <div className="flex-1 w-full flex justify-center">
             <div className="relative w-full max-w-md aspect-video bg-secondary/30 rounded-xl overflow-hidden border border-white/5 flex items-center justify-center">
-                {/* 
-                  This uses an open-source GitHub Readme Stats API. 
-                  We use standard img tag here because it's an external dynamic SVG.
-                */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src="https://github-readme-stats.vercel.app/api?username=kaweesha-anuhas&show_icons=true&theme=transparent&text_color=94a3b8&icon_color=8b5cf6&title_color=8b5cf6&hide_border=true" 
                   alt="Kaweesha's GitHub Stats"
@@ -54,7 +46,6 @@ export function GitHubSection() {
                 />
             </div>
           </div>
-
         </div>
       </div>
     </section>

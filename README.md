@@ -29,4 +29,8 @@ A modern, production-ready personal portfolio website designed to showcase my pr
 
 1. Clone the repository:
    ```bash
+<<<<<<< HEAD
    git clone https://github.com/YOUR_USERNAME/kaweesha-portfolio.git
+=======
+   git clone https://github.com/YOUR_USERNAME/kaweesha-portfolio.git
+>>>>>>> 1fd234757d7b0d859e1c31f31d60760c8263ebe6

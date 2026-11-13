@@ -23,7 +23,7 @@ export function Contact() {
     defaultValues: { name: "", email: "", message: "", honeypot: "" },
   });
 
-     const onSubmit = async (data: ContactFormValues) => {
+  const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/contact", {
@@ -32,15 +32,12 @@ export function Contact() {
         body: JSON.stringify(data),
       });
 
-      // Read response as text first
       const text = await response.text();
       let result;
       
       try {
         result = JSON.parse(text);
-      } catch (e) {
-        // If it fails to parse JSON, it means we got an HTML error page
-        console.error("API returned HTML:", text);
+      } catch {
         throw new Error(`Server error (${response.status}). Check terminal for details.`);
       }
 
@@ -52,10 +49,9 @@ export function Contact() {
         description: "Thank you for reaching out. I'll get back to you soon.",
       });
       form.reset();
-    } catch (error: any) {
-      toast.error("Failed to send message", {
-        description: error.message || "Please try again later.",
-      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Please try again later.";
+      toast.error("Failed to send message", { description: message });
     } finally {
       setIsSubmitting(false);
     }
@@ -64,22 +60,19 @@ export function Contact() {
   return (
     <section id="contact" className="py-24 relative">
       <div className="container mx-auto px-4 md:px-6">
-        
         <Reveal>
           <div className="flex flex-col items-center mb-16 text-center">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-              Let's <span className="text-brand-violet">Work Together</span>
+              Let&apos;s <span className="text-brand-violet">Work Together</span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-brand-indigo to-brand-cyan rounded-full mb-4" />
             <p className="text-muted-foreground max-w-2xl text-lg">
-              I'm seeking a Software Engineering Internship. Whether you have an opportunity, a question, or just want to say hi, my inbox is always open.
+              I&apos;m seeking a Software Engineering Internship. Whether you have an opportunity, a question, or just want to say hi, my inbox is always open.
             </p>
           </div>
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          
-          {/* Contact Info */}
           <Reveal delay={0.1}>
             <div className="space-y-8">
               <div className="glass p-6 rounded-xl border border-white/10">
@@ -109,7 +102,6 @@ export function Contact() {
                 </div>
               </div>
 
-              {/* Social Links */}
               <div className="glass p-6 rounded-xl border border-white/10">
                 <h3 className="font-heading font-bold text-xl mb-4">Connect with me</h3>
                 <div className="flex gap-4">
@@ -130,7 +122,6 @@ export function Contact() {
             </div>
           </Reveal>
 
-          {/* Contact Form */}
           <Reveal delay={0.2}>
             <div className="glass p-6 md:p-8 rounded-xl border border-white/10">
               <Form {...form}>
@@ -181,7 +172,6 @@ export function Contact() {
                     )}
                   />
 
-                  {/* Honeypot field (Hidden from humans) */}
                   <FormField
                     control={form.control}
                     name="honeypot"
